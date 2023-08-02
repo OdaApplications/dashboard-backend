@@ -5,19 +5,20 @@ const { createMessagePdf } = require("../../services/createMessagePdf");
 const postDepMessagesByJoin = async (req, res, next) => {
   const {
     senderName,
-    senderEmail,
+    senderEmail = null,
     senderAddress = null,
     senderPhone = null,
     recieverLevel,
     recieverDistrict = null,
     recieverHromada = null,
+    recieverName = null,
     title = null,
-    text,
+    text = null,
     isAnswerByEmail = null,
   } = req.body;
 
   const newMessageQuery =
-    "INSERT INTO dep_messages (senderName, senderEmail, senderAddress, senderPhone, recieverLevel, recieverDistrict, recieverHromada, title, text, isAnswerByEmail) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+    "INSERT INTO dep_messages (senderName, senderEmail, senderAddress, senderPhone, recieverLevel, recieverDistrict, recieverHromada, recieverName, title, text, isAnswerByEmail) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
   try {
     pool.query(
@@ -30,6 +31,7 @@ const postDepMessagesByJoin = async (req, res, next) => {
         recieverLevel,
         recieverDistrict,
         recieverHromada,
+        recieverName,
         title,
         text,
         isAnswerByEmail,
