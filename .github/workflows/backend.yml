@@ -25,7 +25,7 @@ jobs:
       - name: Env Capture
         run: cp /home/david/secret/.env /home/david/backend/_work/dashboard-backend/dashboard-backend/
 
-      - name: Install dependendencies.
+      - name: Install dependendencies
         run: 
           npm install
  
