@@ -39,5 +39,9 @@ Dashboard backend - Node.js, SQL
 - check error messeges (error boundary)
 
 - server rendering
-- cybersecurity
-- экранувати SQL запити
+
+# security
+
+- параметризовані/екрановані запити - ?, ? [] - 50/100
+- права доступа
+- валідація, очищення даних - mysql.escape()

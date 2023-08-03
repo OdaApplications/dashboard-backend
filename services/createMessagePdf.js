@@ -2,8 +2,8 @@ const fs = require("fs");
 const path = require("path");
 const { jsPDF } = require("jspdf");
 
-const { fontTimes } = require("../fonts/times-normal");
-const { fontTimesBold } = require("../fonts/times-bold");
+const { fontTimes } = require("../fonts/times/times-normal");
+const { fontTimesBold } = require("../fonts/times/times-bold");
 
 const createMessagePdf = async (messageData) => {
   const {
