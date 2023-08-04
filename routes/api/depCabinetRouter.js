@@ -13,13 +13,13 @@ const {
 } = require("../../controllers/depCabinet");
 
 usersRouter.get(
-  "messages/get-messages",
+  "/messages/get-messages",
   authMiddleware,
   ctrlWrapper(getDepMessagesByJoin)
 );
 
 usersRouter.post(
-  "messages/add-message",
+  "/messages/add-message",
   messagesValidation,
   ctrlWrapper(postDepMessagesByJoin)
 );
