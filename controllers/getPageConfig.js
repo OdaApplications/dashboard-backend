@@ -19,11 +19,11 @@ const getPageConfig = async (req, res, next) => {
   ) AS charts
 FROM ch_charts_groups AS g
 INNER JOIN ch_charts AS c ON g.id = c.chartsGroupsId
-WHERE g.pageName = '${pageName}'
+WHERE g.pageName = ?
 GROUP BY g.id`;
 
   try {
-    pool.query(query, function (err, result, fields) {
+    pool.query(query, [pageName], function (err, result, fields) {
       if (err) {
         return res.status(404).json({
           message: "not found",

@@ -48,6 +48,7 @@ const {
   disabledLiveStatsHromada,
 } = require("../../controllers/cas");
 const { getPageConfig } = require("../../controllers/getPageConfig");
+const { getChartData } = require("../../controllers/getChartData");
 
 // get all tables
 chartsRouter.get("/tables", ctrlWrapper(getAllTables));
@@ -146,5 +147,7 @@ chartsRouter.get("/cas/disabled", ctrlWrapper(disabled));
 
 // page chart config routes
 chartsRouter.get("/get-page-config/:pageName", ctrlWrapper(getPageConfig));
+
+chartsRouter.get("/get-chart-data", ctrlWrapper(getChartData));
 
 module.exports = chartsRouter;
