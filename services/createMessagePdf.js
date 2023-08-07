@@ -41,10 +41,14 @@ const createMessagePdf = async (messageData) => {
   const textX = marginLeft;
   let textY = 115;
 
-  const splittedText = doc.splitTextToSize(
-    text,
-    pageWidth - marginLeft - marginRight
-  );
+  function splitText(textFragment, width, left, right) {
+    const splittedText = doc.splitTextToSize(
+      textFragment,
+      width - left - right
+    );
+
+    return splittedText;
+  }
 
   // шапка
   doc.text("____________ № ______________", 20, 20);
@@ -72,7 +76,7 @@ const createMessagePdf = async (messageData) => {
 
   // відправник
   doc.text("від:", 110, 60);
-  doc.text(senderName, 110, 65);
+  doc.text(splitText(senderName), 110, 65);
 
   if (senderEmail) {
     doc.text(`e-mail: ${senderEmail}`, 110, 70);
@@ -91,11 +95,7 @@ const createMessagePdf = async (messageData) => {
 
   doc.setFont("times", "normal");
 
-  doc.text(splittedText, textX, textY);
-  // lines.forEach((line) => {
-  //   doc.text(line, textX, textY);
-  //   textY += lineHeight;
-  // });
+  doc.text(splitText(text, pageWidth, marginLeft, marginRight), textX, textY);
 
   if (isAnswerByEmail) {
     doc.text("Бажаю отримати відповідь на email.", 20, 265);

@@ -18,7 +18,7 @@ app.use(express.urlencoded({ extended: false }));
 app.use("/api/charts", chartsRouter);
 app.use("/api/tables", tableRouter);
 app.use("/api/auth", authRouter);
-app.use("/api/cabinet", depCabinetRouter);
+app.use("/api/profile", depCabinetRouter);
 
 app.use((req, res) => {
   res.status(404).json({
