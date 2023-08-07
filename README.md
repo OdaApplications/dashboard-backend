@@ -20,6 +20,7 @@ Dashboard backend - Node.js, SQL
 
 # todo
 
+- temp dir for temp files
 - pdf messages
 
 - charts model
