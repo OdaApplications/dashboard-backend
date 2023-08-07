@@ -76,14 +76,14 @@ const createMessagePdf = async (messageData) => {
 
   // відправник
   doc.text("від:", 110, 60);
-  doc.text(splitText(senderName), 110, 65);
+  doc.text(senderName, 110, 65);
 
   if (senderEmail) {
     doc.text(`e-mail: ${senderEmail}`, 110, 70);
   }
 
   if (senderAddress) {
-    doc.text(senderAddress, 110, 75);
+    doc.text(splitText(senderAddress, 100, 0, 10), 110, 75);
   }
 
   if (senderPhone) {

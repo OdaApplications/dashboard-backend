@@ -10,7 +10,7 @@ const signupValidation = (req, res, next) => {
         tlds: { allow: ["com", "net"] },
       })
       .required(),
-    structureName: Joi.string().valid("oda", "district", "hromada").required(),
+    structureName: Joi.string().required(),
     phone: Joi.string().min(3).max(30).required(),
     position: Joi.string().valid("user", "deputy", "admin").required(),
     access: Joi.string().valid("oda", "district", "hromada").required(),
@@ -92,10 +92,6 @@ const signupValidation = (req, res, next) => {
     ),
     phone: Joi.string().min(3).max(30).required(),
   });
-
-  // surname: Joi.string().min(3).max(30).required(),
-  // firstName: Joi.string().min(3).max(30).required(),
-  // lastName: Joi.string().min(3).max(30).required(),
 
   const validationResult = schema.validate(req.body);
 

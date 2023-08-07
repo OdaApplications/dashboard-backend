@@ -13,6 +13,7 @@ const signup = async (req, res, next) => {
     // lastName,
     phone = null,
     position = "user",
+    access = null,
     district = null,
     hromada = null,
   } = req.body;
@@ -42,7 +43,7 @@ const signup = async (req, res, next) => {
       const hashPassword = bcrypt.hashSync(password, bcrypt.genSaltSync(10));
 
       const newUserQuery =
-        "INSERT INTO dep_users (login, email, password, structureName, phone, position, district, hromada) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+        "INSERT INTO dep_users (login, email, password, structureName, phone, position, access, district, hromada) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
       pool.query(
         newUserQuery,
@@ -53,6 +54,7 @@ const signup = async (req, res, next) => {
           structureName,
           phone,
           position,
+          access,
           district,
           hromada,
         ],

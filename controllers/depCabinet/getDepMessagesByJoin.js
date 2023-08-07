@@ -38,7 +38,7 @@ const getDepMessagesByJoin = async (req, res, next) => {
     WHERE m.recieverLevel = 'district' AND m.recieverDistrict = '${district}';`;
   };
 
-  const messagesQueryHromada = (district, hromada) => {
+  const messagesQueryHromada = (hromada) => {
     return `SELECT 
   m.id,
   m.senderName,
@@ -52,9 +52,8 @@ const getDepMessagesByJoin = async (req, res, next) => {
   m.createdAt 
     FROM dep_messages AS m
     INNER JOIN dep_users AS u ON m.recieverLevel = u.access
-                             AND m.recieverDistrict = u.district
                              AND m.recieverHromada = u.hromada
-   WHERE m.recieverLevel = 'hromada' AND m.recieverDistrict = '${district}' AND m.recieverHromada = '${hromada}';`;
+   WHERE m.recieverLevel = 'hromada' AND m.recieverHromada = '${hromada}';`;
   };
 
   const messageQuery = `SELECT access, district, hromada
@@ -88,10 +87,7 @@ const getDepMessagesByJoin = async (req, res, next) => {
       }
 
       if (result[0].access === "hromada") {
-        queryByRole = messagesQueryHromada(
-          result[0].district,
-          result[0].hromada
-        );
+        queryByRole = messagesQueryHromada(result[0].hromada);
       }
 
       pool.query(queryByRole, function (err, result, fields) {
