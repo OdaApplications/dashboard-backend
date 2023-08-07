@@ -7,6 +7,7 @@ const getCurrentUser = async (req, res, next) => {
         login,
         email,
         surname,
+        structureName,
         firstName,
         lastName,
         phone,
