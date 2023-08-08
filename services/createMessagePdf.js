@@ -72,7 +72,10 @@ const createMessagePdf = async (messageData) => {
   }
 
   doc.text(recieverName, 110, 45);
-  doc.text(`e-mail: ${recieverEmail}`, 110, 50);
+
+  if (recieverEmail) {
+    doc.text(`e-mail: ${recieverEmail}`, 110, 50);
+  }
 
   // відправник
   doc.text("від:", 110, 60);
