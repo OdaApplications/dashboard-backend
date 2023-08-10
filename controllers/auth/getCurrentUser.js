@@ -6,23 +6,19 @@ const getCurrentUser = async (req, res, next) => {
   const userQuery = `SELECT id,
         login,
         email,
-        surname,
         structureName,
-        firstName,
-        lastName,
         phone,
         position,
         access,
         district,
-        hromada FROM dep_users WHERE id = '${id}'`;
+        hromada FROM dep_users WHERE id = ?`;
 
   try {
-    pool.query(userQuery, function (err, result, fields) {
+    pool.query(userQuery, [id], function (err, result, fields) {
       if (err) {
         return res.status(404).json({
           message: "not found",
           code: 404,
-          data: err,
         });
       }
 
@@ -42,7 +38,7 @@ const getCurrentUser = async (req, res, next) => {
       });
     });
   } catch (error) {
-    return res.status(500).json({ message: error.message });
+    return res.status(500).json({ message: "current user error" });
   }
 };
 

@@ -13,15 +13,14 @@ const getDepMessages = async (req, res, next) => {
         isArchived,
         answeredAt,
         createdAt
-        FROM dep_messages WHERE userId = '${id}'`;
+        FROM dep_messages WHERE userId = ?`;
 
   try {
-    pool.query(messageQuery, function (err, result, fields) {
+    pool.query(messageQuery, [id], function (err, result, fields) {
       if (err) {
         return res.status(404).json({
           message: "not found",
           code: 404,
-          data: err,
         });
       }
 
@@ -31,8 +30,6 @@ const getDepMessages = async (req, res, next) => {
           code: 404,
         });
       }
-
-      console.log("result:", result);
 
       res.json({
         message: "success",
@@ -44,7 +41,10 @@ const getDepMessages = async (req, res, next) => {
       });
     });
   } catch (error) {
-    return res.status(500).json({ message: error.message });
+    return res.status(500).json({
+      message: "dep messages error",
+      code: 500,
+    });
   }
 };
 

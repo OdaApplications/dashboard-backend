@@ -28,7 +28,6 @@ GROUP BY g.id`;
         return res.status(404).json({
           message: "not found",
           code: 404,
-          data: err,
         });
       }
 
@@ -49,7 +48,10 @@ GROUP BY g.id`;
       });
     });
   } catch (error) {
-    return res.status(500).json({ message: error.message });
+    return res.status(500).json({
+      message: "page config error",
+      code: 500,
+    });
   }
 };
 

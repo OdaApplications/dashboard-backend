@@ -39,7 +39,7 @@ const postDepMessagesByJoin = async (req, res, next) => {
       async (err, result) => {
         if (err) {
           return res.status(404).json({
-            message: err.message,
+            message: "post messages error",
             code: 404,
           });
         }
@@ -56,12 +56,18 @@ const postDepMessagesByJoin = async (req, res, next) => {
 
           return res.status(201).send(data);
         } catch (error) {
-          return res.status(500).json({ message: error.message });
+          return res.status(500).json({
+            message: "post messages error",
+            code: 500,
+          });
         }
       }
     );
   } catch (error) {
-    return res.status(500).json({ message: error.message });
+    return res.status(500).json({
+      message: "post messages error",
+      code: 500,
+    });
   }
 };
 
