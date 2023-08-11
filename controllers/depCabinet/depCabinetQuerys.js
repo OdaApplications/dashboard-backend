@@ -15,6 +15,7 @@ const messagesOdaQuery = (limit, skip) => {
     FROM dep_messages AS m
     INNER JOIN dep_users AS u ON m.recieverLevel = u.access
     WHERE m.recieverLevel = 'oda' AND u.position = 'council'
+    ORDER BY m.createdAt DESC
     LIMIT ${limit} OFFSET ${skip};`;
 };
 
@@ -36,6 +37,7 @@ const messagesDistrictQuery = (limit, skip, district) => {
     INNER JOIN dep_users AS u ON m.recieverLevel = u.access
     AND m.recieverDistrict = u.district
     WHERE m.recieverLevel = 'district' AND m.recieverDistrict = '${district}'
+    ORDER BY m.createdAt DESC
     LIMIT ${limit} OFFSET ${skip};`;
 };
 
@@ -57,6 +59,7 @@ const messagesHromadaQuery = (limit, skip, hromada) => {
     INNER JOIN dep_users AS u ON m.recieverLevel = u.access
     AND m.recieverHromada = u.hromada
     WHERE m.recieverLevel = 'hromada' AND m.recieverHromada = '${hromada}'
+    ORDER BY m.createdAt DESC
     LIMIT ${limit} OFFSET ${skip};`;
 };
 
@@ -77,6 +80,7 @@ const messagesOdaDeputyQuery = (limit, skip, deputy) => {
     FROM dep_messages AS m
     INNER JOIN dep_users AS u ON m.recieverLevel = u.access
     WHERE m.recieverLevel = 'oda' AND u.position = 'deputy' AND m.recieverName = '${deputy}'
+    ORDER BY m.createdAt DESC
     LIMIT ${limit} OFFSET ${skip};`;
 };
 

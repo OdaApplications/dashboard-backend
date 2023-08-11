@@ -31,8 +31,8 @@ const getDepMessagesByJoin = async (req, res, next) => {
       }
 
       let queryByLevel = "";
-      let isDeputy = false;
-      let deputyName = "";
+      // let isDeputy = false;
+      // let deputyName = "";
 
       if (result[0].access === "oda" && result[0].position === "council") {
         console.log("oda & concil");
