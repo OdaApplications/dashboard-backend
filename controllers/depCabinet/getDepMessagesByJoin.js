@@ -3,6 +3,7 @@ const {
   messagesOdaQuery,
   messagesDistrictQuery,
   messagesHromadaQuery,
+  messagesOdaDeputyQuery,
 } = require("./depCabinetQuerys");
 
 const getDepMessagesByJoin = async (req, res, next) => {
@@ -10,7 +11,7 @@ const getDepMessagesByJoin = async (req, res, next) => {
   const { page = 0, limit = 10 } = req.query;
   const skip = page * limit;
 
-  const messageQuery = `SELECT access, district, hromada
+  const messageQuery = `SELECT access, district, hromada, position, structureName
         FROM dep_users WHERE id = ?`;
 
   try {
@@ -30,17 +31,35 @@ const getDepMessagesByJoin = async (req, res, next) => {
       }
 
       let queryByLevel = "";
+      let isDeputy = false;
+      let deputyName = "";
 
-      if (result[0].access === "oda") {
+      if (result[0].access === "oda" && result[0].position === "council") {
+        console.log("oda & concil");
         queryByLevel = messagesOdaQuery(limit, skip);
       }
 
-      if (result[0].access === "district") {
+      if (result[0].access === "district" && result[0].position === "council") {
+        console.log("district & concil");
         queryByLevel = messagesDistrictQuery(limit, skip, result[0].district);
       }
 
-      if (result[0].access === "hromada") {
+      if (result[0].access === "hromada" && result[0].position === "council") {
+        console.log("hromada & concil");
         queryByLevel = messagesHromadaQuery(limit, skip, result[0].hromada);
+      }
+
+      if (result[0].access === "oda" && result[0].position === "deputy") {
+        console.log("oda & deputy");
+
+        // isDeputy = true;
+        // deputyName = result[0].structureName;
+
+        queryByLevel = messagesOdaDeputyQuery(
+          limit,
+          skip,
+          result[0].structureName
+        );
       }
 
       pool.query(queryByLevel, function (err, result, fields) {
@@ -57,6 +76,28 @@ const getDepMessagesByJoin = async (req, res, next) => {
             code: 404,
           });
         }
+
+        // if (isDeputy && deputyName) {
+        //   console.log(isDeputy, deputyName);
+
+        //   // by filter and without workin total count
+
+        //   // const filtredResult = result.filter((message) => {
+        //   //   console.log("++", message.recieverName);
+        //   //   return message.recieverName === deputyName;
+        //   // });
+
+        //   // console.log("filtredResult", filtredResult);
+
+        //   // return res.json({
+        //   //   message: "success",
+        //   //   data: {
+        //   //     // totalCount: filtredResult.totalCount,
+        //   //     userMessages: filtredResult,
+        //   //   },
+        //   //   code: 200,
+        //   // });
+        // }
 
         res.json({
           message: "success",
