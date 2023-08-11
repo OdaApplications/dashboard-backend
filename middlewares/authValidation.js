@@ -111,8 +111,8 @@ const signupValidation = (req, res, next) => {
 
 const loginValidation = (req, res, next) => {
   const schema = Joi.object({
-    login: Joi.string().min(3).max(12).required(),
-    password: Joi.string().min(3).max(12).required(),
+    login: Joi.string().min(3).max(30).required(),
+    password: Joi.string().min(3).max(30).required(),
   });
 
   const validationResult = schema.validate(req.body);
