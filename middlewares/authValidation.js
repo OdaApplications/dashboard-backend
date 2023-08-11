@@ -11,8 +11,13 @@ const signupValidation = (req, res, next) => {
       })
       .required(),
     structureName: Joi.string().required(),
-    phone: Joi.string().min(3).max(30).required(),
-    position: Joi.string().valid("user", "deputy", "admin").required(),
+    surname: Joi.string().max(50),
+    firstName: Joi.string().max(50),
+    lastName: Joi.string().max(50),
+    phone: Joi.string().max(30),
+    position: Joi.string()
+      .valid("user", "deputy", "council", "admin")
+      .required(),
     access: Joi.string().valid("oda", "district", "hromada").required(),
     district: Joi.string().valid(
       "Ужгородський",
@@ -90,7 +95,6 @@ const signupValidation = (req, res, next) => {
       "Довжанська",
       null
     ),
-    phone: Joi.string().min(3).max(30).required(),
   });
 
   const validationResult = schema.validate(req.body);
