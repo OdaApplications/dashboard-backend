@@ -1,10 +1,13 @@
 const fs = require("fs");
 const { pool } = require("../../models/connection");
+const { mailer } = require("../../mailer/mailer");
+
 const { createMessagePdf } = require("../../services/createMessagePdf");
+const { getRecieverNameTemplete } = require("../../helpers");
 
 const postDepMessagesByJoin = async (req, res, next) => {
   const {
-    senderName,
+    senderName = null,
     senderEmail = null,
     senderAddress = null,
     senderPhone = null,
@@ -16,6 +19,10 @@ const postDepMessagesByJoin = async (req, res, next) => {
     text = null,
     isAnswerByEmail = null,
   } = req.body;
+
+  const { emailList } = req.dep;
+
+  console.log("emailList:", emailList);
 
   const newMessageQuery =
     "INSERT INTO dep_messages (senderName, senderEmail, senderAddress, senderPhone, recieverLevel, recieverDistrict, recieverHromada, recieverName, title, text, isAnswerByEmail) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
@@ -54,7 +61,26 @@ const postDepMessagesByJoin = async (req, res, next) => {
             "attachment; filename=e-message.pdf"
           );
 
-          return res.status(201).send(data);
+          await mailer.sendMail({
+            from: process.env.MAILER_USERNAME,
+            to: emailList,
+            subject: title,
+            text: `${getRecieverNameTemplete(
+              recieverLevel,
+              recieverDistrict,
+              recieverHromada
+            )} \nВідправник: ${senderName} \nE-mail відправника: ${senderEmail} \nОтримувач: ${recieverName} \nТекст зверненя: ${text}`,
+            // html:
+            attachments: [
+              {
+                filename: "e-message.pdf",
+                path: pathToPdfFile,
+              },
+            ],
+          });
+
+          await res.status(201).send(data);
+          fs.unlinkSync(pathToPdfFile);
         } catch (error) {
           return res.status(500).json({
             message: "post messages error",

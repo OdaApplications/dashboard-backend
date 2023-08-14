@@ -1,4 +1,5 @@
 const { pool } = require("../../models/connection");
+
 const {
   messagesOdaQuery,
   messagesDistrictQuery,
@@ -31,8 +32,6 @@ const getDepMessagesByJoin = async (req, res, next) => {
       }
 
       let queryByLevel = "";
-      // let isDeputy = false;
-      // let deputyName = "";
 
       if (result[0].access === "oda" && result[0].position === "council") {
         console.log("oda & concil");
@@ -51,9 +50,6 @@ const getDepMessagesByJoin = async (req, res, next) => {
 
       if (result[0].access === "oda" && result[0].position === "deputy") {
         console.log("oda & deputy");
-
-        // isDeputy = true;
-        // deputyName = result[0].structureName;
 
         queryByLevel = messagesOdaDeputyQuery(
           limit,

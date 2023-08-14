@@ -5,9 +5,11 @@ const {
   ctrlWrapper,
   authMiddleware,
   messagesValidation,
+  depMiddleware,
 } = require("../../middlewares");
 
 const {
+  getDeputy,
   getDepMessagesByJoin,
   postDepMessagesByJoin,
 } = require("../../controllers/depCabinet");
@@ -21,7 +23,10 @@ usersRouter.get(
 usersRouter.post(
   "/messages/add-message",
   messagesValidation,
+  depMiddleware,
   ctrlWrapper(postDepMessagesByJoin)
 );
+
+usersRouter.get("/deputy/search-dep/:depName", ctrlWrapper(getDeputy));
 
 module.exports = usersRouter;

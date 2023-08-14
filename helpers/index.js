@@ -1,7 +1,9 @@
-const { getQueryStringFromArray } = require("./generateTemplateString");
 const { getRowCount } = require("./getRowCount");
+const { getQueryStringFromArray } = require("./generateTemplateString");
+const { getRecieverNameTemplete } = require("./getRecieverNameTemplete");
 
 module.exports = {
-  getQueryStringFromArray,
   getRowCount,
+  getQueryStringFromArray,
+  getRecieverNameTemplete,
 };
