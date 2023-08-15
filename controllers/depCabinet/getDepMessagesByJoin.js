@@ -5,6 +5,8 @@ const {
   messagesDistrictQuery,
   messagesHromadaQuery,
   messagesOdaDeputyQuery,
+  messagesDistictDeputyQuery,
+  messagesHromadaDeputyQuery,
 } = require("./depCabinetQuerys");
 
 const getDepMessagesByJoin = async (req, res, next) => {
@@ -56,10 +58,29 @@ const getDepMessagesByJoin = async (req, res, next) => {
 
       if (result[0].access === "oda" && result[0].position === "deputy") {
         console.log("oda & deputy");
-
         queryByLevel = messagesOdaDeputyQuery(
           limit,
           skip,
+          result[0].structureName
+        );
+      }
+
+      if (result[0].access === "district" && result[0].position === "deputy") {
+        console.log("district & deputy");
+        queryByLevel = messagesDistictDeputyQuery(
+          limit,
+          skip,
+          result[0].district,
+          result[0].structureName
+        );
+      }
+
+      if (result[0].access === "hromada" && result[0].position === "deputy") {
+        console.log("hromada & deputy");
+        queryByLevel = messagesHromadaDeputyQuery(
+          limit,
+          skip,
+          result[0].hromada,
           result[0].structureName
         );
       }

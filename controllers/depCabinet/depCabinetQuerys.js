@@ -84,9 +84,63 @@ const messagesOdaDeputyQuery = (limit, skip, deputy) => {
     LIMIT ${limit} OFFSET ${skip};`;
 };
 
+const messagesDistictDeputyQuery = (limit, skip, district, deputy) => {
+  return `SELECT
+  (SELECT COUNT(recieverName) FROM dep_messages WHERE recieverName = '${deputy}') AS totalCount,  
+  m.id,
+  m.senderName,
+  m.senderEmail,
+  m.recieverName,
+  m.title,
+  m.text,
+  m.isReaded,        
+  m.isAnswered,
+  m.isArchived,
+  m.answeredAt,
+  m.createdAt
+    FROM dep_messages AS m
+    INNER JOIN dep_users AS u ON m.recieverLevel = u.access 
+    AND m.recieverDistrict = u.district
+    AND m.recieverName = u.structureName
+    WHERE m.recieverLevel = 'district'
+    AND u.position = 'deputy'
+    AND m.recieverDistrict = '${district}'
+    AND m.recieverName = '${deputy}'
+    ORDER BY m.createdAt DESC
+    LIMIT ${limit} OFFSET ${skip};`;
+};
+
+const messagesHromadaDeputyQuery = (limit, skip, hromada, deputy) => {
+  return `SELECT
+  (SELECT COUNT(recieverName) FROM dep_messages WHERE recieverName = '${deputy}') AS totalCount,  
+  m.id,
+  m.senderName,
+  m.senderEmail,
+  m.recieverName,
+  m.title,
+  m.text,
+  m.isReaded,        
+  m.isAnswered,
+  m.isArchived,
+  m.answeredAt,
+  m.createdAt
+    FROM dep_messages AS m
+    INNER JOIN dep_users AS u ON m.recieverLevel = u.access 
+    AND m.recieverHromada = u.hromada
+    AND m.recieverName = u.structureName
+    WHERE m.recieverLevel = 'hromada'
+    AND u.position = 'deputy'
+    AND m.recieverHromada = '${hromada}'
+    AND m.recieverName = '${deputy}'
+    ORDER BY m.createdAt DESC
+    LIMIT ${limit} OFFSET ${skip};`;
+};
+
 module.exports = {
   messagesOdaQuery,
   messagesDistrictQuery,
   messagesHromadaQuery,
   messagesOdaDeputyQuery,
+  messagesDistictDeputyQuery,
+  messagesHromadaDeputyQuery,
 };
