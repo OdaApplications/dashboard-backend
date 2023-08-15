@@ -78,7 +78,7 @@ const messagesOdaDeputyQuery = (limit, skip, deputy) => {
   m.answeredAt,
   m.createdAt
     FROM dep_messages AS m
-    INNER JOIN dep_users AS u ON m.recieverLevel = u.access
+    INNER JOIN dep_users AS u ON m.recieverLevel = u.access AND m.recieverName = u.structureName
     WHERE m.recieverLevel = 'oda' AND u.position = 'deputy' AND m.recieverName = '${deputy}'
     ORDER BY m.createdAt DESC
     LIMIT ${limit} OFFSET ${skip};`;

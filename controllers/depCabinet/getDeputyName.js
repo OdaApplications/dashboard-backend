@@ -23,14 +23,16 @@ const getDeputyName = async (req, res, next) => {
   FROM dep_users AS u
   WHERE u.structureName LIKE '%${depName}%' 
   AND u.access = 'district'
-  AND u.district = '${recieverDistrict}' AND u.position = 'deputy'
+  AND u.district = '${recieverDistrict}' 
+  AND u.position = 'deputy'
   LIMIT 10;`;
 
   const depHromadaQuery = `SELECT 
   u.structureName AS deputy
   FROM dep_users AS u
   WHERE u.structureName LIKE '%${depName}%' 
-  AND u.access = 'hromada' AND u.hromada = '${recieverHromada}' 
+  AND u.access = 'hromada'
+  AND u.hromada = '${recieverHromada}' 
   AND u.position = 'deputy'
   LIMIT 10;`;
 
@@ -65,7 +67,7 @@ const getDeputyName = async (req, res, next) => {
         });
       }
 
-      res.json({
+      res.status(200).json({
         message: "success",
         data: {
           length: result.length,

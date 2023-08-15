@@ -12,8 +12,14 @@ const getDepMessagesByJoin = async (req, res, next) => {
   const { page = 0, limit = 10 } = req.query;
   const skip = page * limit;
 
-  const messageQuery = `SELECT access, district, hromada, position, structureName
-        FROM dep_users WHERE id = ?`;
+  const messageQuery = `SELECT 
+  access,
+  district,
+  hromada,
+  position,
+  structureName
+  FROM dep_users
+  WHERE id = ?`;
 
   try {
     pool.query(messageQuery, [id], function (err, result, fields) {
@@ -73,7 +79,7 @@ const getDepMessagesByJoin = async (req, res, next) => {
           });
         }
 
-        res.json({
+        res.status(200).json({
           message: "success",
           data: {
             totalCount: result[0].totalCount,
