@@ -34,8 +34,6 @@ const messagesDistrictQuery = (limit, skip, district) => {
   m.answeredAt,
   m.createdAt
     FROM dep_messages AS m
-    INNER JOIN dep_users AS u ON m.recieverLevel = u.access
-    AND m.recieverDistrict = u.district
     WHERE m.recieverLevel = 'district' AND m.recieverDistrict = '${district}'
     ORDER BY m.createdAt DESC
     LIMIT ${limit} OFFSET ${skip};`;
@@ -55,9 +53,7 @@ const messagesHromadaQuery = (limit, skip, hromada) => {
   m.isArchived,
   m.answeredAt,
   m.createdAt
-    FROM dep_messages AS m
-    INNER JOIN dep_users AS u ON m.recieverLevel = u.access
-    AND m.recieverHromada = u.hromada
+    FROM dep_messages AS m    
     WHERE m.recieverLevel = 'hromada' AND m.recieverHromada = '${hromada}'
     ORDER BY m.createdAt DESC
     LIMIT ${limit} OFFSET ${skip};`;
