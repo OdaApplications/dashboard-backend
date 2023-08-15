@@ -1,13 +1,4 @@
 const { pool } = require("../models/connection");
-const { createHmac } = require("node:crypto");
-
-const secret = "abcdefg";
-const hash = createHmac("sha256", secret)
-  .update("I love cupcakes")
-  .digest("hex");
-console.log(hash);
-// Печать:
-// c0fa1bc00531bd78ef38c628449c5102aeabd49b5dc3a2a516ea6ea959d6658e
 
 const getDataByDynamicQuery = async (req, res, next) => {
   const { column = null, district = null, hromada = null } = req.body;

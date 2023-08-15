@@ -1,4 +1,3 @@
-const { uid } = require("uid");
 const bcrypt = require("bcryptjs");
 const { pool } = require("../../models/connection");
 
@@ -37,9 +36,6 @@ const signup = async (req, res, next) => {
         });
       }
 
-      const newId = uid();
-
-      // const verificationToken = uid(); - when use Sengrid
       const hashPassword = bcrypt.hashSync(password, bcrypt.genSaltSync(10));
 
       const newUserQuery =

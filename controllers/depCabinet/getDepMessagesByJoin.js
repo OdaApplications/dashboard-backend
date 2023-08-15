@@ -73,28 +73,6 @@ const getDepMessagesByJoin = async (req, res, next) => {
           });
         }
 
-        // if (isDeputy && deputyName) {
-        //   console.log(isDeputy, deputyName);
-
-        //   // by filter and without workin total count
-
-        //   // const filtredResult = result.filter((message) => {
-        //   //   console.log("++", message.recieverName);
-        //   //   return message.recieverName === deputyName;
-        //   // });
-
-        //   // console.log("filtredResult", filtredResult);
-
-        //   // return res.json({
-        //   //   message: "success",
-        //   //   data: {
-        //   //     // totalCount: filtredResult.totalCount,
-        //   //     userMessages: filtredResult,
-        //   //   },
-        //   //   code: 200,
-        //   // });
-        // }
-
         res.json({
           message: "success",
           data: {

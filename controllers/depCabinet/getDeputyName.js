@@ -1,15 +1,53 @@
 const { pool } = require("../../models/connection");
 
 const getDeputyName = async (req, res, next) => {
-  const { depName } = req.params;
-  console.log("depName", depName);
+  const { recieverLevel } = req.params;
+  const {
+    depName = null,
+    recieverDistrict = null,
+    recieverHromada = null,
+  } = req.query;
 
-  const depQuery = `SELECT 
-  u.structureName,
-  u.email
+  let depQuery = "";
+
+  const depOdaQuery = `SELECT 
+  u.structureName AS deputy
   FROM dep_users AS u
-  WHERE u.structureName LIKE '%${depName}%'
+  WHERE u.structureName LIKE '%${depName}%' 
+  AND u.access = 'oda' 
+  AND u.position = 'deputy'
   LIMIT 10;`;
+
+  const depDistrictQuery = `SELECT 
+  u.structureName AS deputy
+  FROM dep_users AS u
+  WHERE u.structureName LIKE '%${depName}%' 
+  AND u.access = 'district'
+  AND u.district = '${recieverDistrict}' AND u.position = 'deputy'
+  LIMIT 10;`;
+
+  const depHromadaQuery = `SELECT 
+  u.structureName AS deputy
+  FROM dep_users AS u
+  WHERE u.structureName LIKE '%${depName}%' 
+  AND u.access = 'hromada' AND u.hromada = '${recieverHromada}' 
+  AND u.position = 'deputy'
+  LIMIT 10;`;
+
+  if (recieverLevel === "oda") {
+    console.log("dep from oda");
+    depQuery = depOdaQuery;
+  }
+
+  if (recieverLevel === "district") {
+    console.log("dep from district");
+    depQuery = depDistrictQuery;
+  }
+
+  if (recieverLevel === "hromada") {
+    console.log("dep from hromada");
+    depQuery = depHromadaQuery;
+  }
 
   try {
     pool.query(depQuery, function (err, result, fields) {

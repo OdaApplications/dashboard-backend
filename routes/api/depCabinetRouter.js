@@ -9,9 +9,9 @@ const {
 } = require("../../middlewares");
 
 const {
-  getDeputy,
   getDepMessagesByJoin,
   postDepMessagesByJoin,
+  getDeputyName,
 } = require("../../controllers/depCabinet");
 
 usersRouter.get(
@@ -27,6 +27,9 @@ usersRouter.post(
   ctrlWrapper(postDepMessagesByJoin)
 );
 
-usersRouter.get("/deputy/search-dep/:depName", ctrlWrapper(getDeputy));
+usersRouter.get(
+  "/deputy/search-dep/:recieverLevel",
+  ctrlWrapper(getDeputyName)
+);
 
 module.exports = usersRouter;

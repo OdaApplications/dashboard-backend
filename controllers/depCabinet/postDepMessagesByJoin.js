@@ -70,17 +70,24 @@ const postDepMessagesByJoin = async (req, res, next) => {
               recieverDistrict,
               recieverHromada
             )} \nВідправник: ${senderName} \nE-mail відправника: ${senderEmail} \nОтримувач: ${recieverName} \nТекст зверненя: ${text}`,
-            // html:
             attachments: [
               {
-                filename: "e-message.pdf",
+                filename: "eMessage.pdf",
                 path: pathToPdfFile,
               },
             ],
           });
 
           await res.status(201).send(data);
-          fs.unlinkSync(pathToPdfFile);
+
+          fs.unlinkSync(pathToPdfFile, (err) => {
+            if (err) {
+              return res.status(404).json({
+                message: "file error",
+                code: 404,
+              });
+            }
+          });
         } catch (error) {
           return res.status(500).json({
             message: "post messages error",
