@@ -12,12 +12,13 @@ const {
   getDepMessagesByJoin,
   postDepMessagesByJoin,
   getDeputyName,
+  getDepMessages,
 } = require("../../controllers/depCabinet");
 
 usersRouter.get(
   "/messages/get-messages",
   authMiddleware,
-  ctrlWrapper(getDepMessagesByJoin)
+  ctrlWrapper(getDepMessages)
 );
 
 usersRouter.post(

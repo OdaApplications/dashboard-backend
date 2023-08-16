@@ -1,3 +1,4 @@
+const { makePoolQuery } = require("../helpers");
 const { pool } = require("../models/connection");
 
 const depMiddleware = async (req, res, next) => {
@@ -8,77 +9,62 @@ const depMiddleware = async (req, res, next) => {
     recieverHromada = null,
   } = req.body;
 
-  const depAndOdaEmailQuery = `SELECT
+  const depDataQuery = `SELECT
+  u.id,
   u.email
   FROM dep_users AS u
-  WHERE u.structureName = '${recieverName}' 
-  AND u.position = 'deputy'
-  OR
-  u.access = '${recieverLevel}'
-  AND u.position = 'council';`;
-
-  const depAndDistrictEmailQuery = `SELECT
-  u.email
-  FROM dep_users AS u
-  WHERE u.structureName = '${recieverName}' 
-  AND u.position = 'deputy'
-  OR
-  u.access = '${recieverLevel}'
-  AND u.position = 'council'
-  AND u.district = '${recieverDistrict}';`;
-
-  const depAndHromadaEmailQuery = `SELECT
-  u.email
-  FROM dep_users AS u
-  WHERE u.structureName = '${recieverName}' 
-  AND u.position = 'deputy'
-  OR
-  u.access = '${recieverLevel}'
-  AND u.position = 'council'
-  AND u.hromada = '${recieverHromada}';`;
-
-  let emailQuery = "";
-
-  if (recieverLevel === "oda") {
-    emailQuery = depAndOdaEmailQuery;
-  }
-
-  if (recieverLevel === "district" && recieverDistrict && !recieverHromada) {
-    emailQuery = depAndDistrictEmailQuery;
-  }
-
-  if (recieverLevel === "hromada" && recieverHromada) {
-    emailQuery = depAndHromadaEmailQuery;
-  }
+  WHERE u.structureName = ?;`;
 
   try {
-    pool.query(emailQuery, function (err, result, fields) {
-      if (err) {
-        return res.status(404).json({
-          message: err,
-          code: 404,
-        });
+    pool.query(
+      depDataQuery,
+      [recieverName],
+      async function (err, result, fields) {
+        if (err) {
+          return res.status(404).json({
+            message: err,
+            code: 404,
+          });
+        }
+
+        if (!result.length) {
+          return res.status(404).json({
+            message: "not found",
+            code: 404,
+          });
+        }
+
+        const councilDataQuery = `SELECT
+        u.id,
+        u.email
+        FROM dep_users AS u
+        WHERE u.access = '${recieverLevel}'
+        AND u.position = 'council'
+        AND (
+	      (u.access = 'oda')
+        OR
+        (u.district = '${recieverDistrict}' AND '${recieverLevel}' = 'district')
+        OR
+        (u.hromada = '${recieverHromada}' AND '${recieverLevel}' = 'hromada')
+        );`;
+
+        const councilData = await makePoolQuery(councilDataQuery);
+
+        const emailList = [];
+        result.map((item) => emailList.push(item.email));
+        councilData.map((item) => emailList.push(item.email));
+
+        req.dep = {
+          deputyId: result[0].id,
+          councilId: councilData[0].id,
+          emailList: emailList,
+        };
+        next();
       }
-
-      if (!result.length) {
-        return res.status(404).json({
-          message: "not found",
-          code: 404,
-        });
-      }
-
-      const emailList = result.map((item) => item.email);
-      // emailList.push("krupchynskyi.plbl@gmail.com");
-
-      req.dep = {
-        emailList,
-      };
-      next();
-    });
+    );
   } catch (error) {
-    console.log(error);
     return res.status(500).json({
-      message: "data error",
+      message: "dep data error",
       code: 500,
     });
   }
