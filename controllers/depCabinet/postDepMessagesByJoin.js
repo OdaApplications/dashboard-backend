@@ -22,8 +22,6 @@ const postDepMessagesByJoin = async (req, res, next) => {
 
   const { emailList } = req.dep;
 
-  console.log("emailList:", emailList);
-
   const newMessageQuery =
     "INSERT INTO dep_messages (senderName, senderEmail, senderAddress, senderPhone, recieverLevel, recieverDistrict, recieverHromada, recieverName, title, text, isAnswerByEmail) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
