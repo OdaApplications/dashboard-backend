@@ -9,7 +9,6 @@ const {
 } = require("../../middlewares");
 
 const {
-  getDepMessagesByJoin,
   postDepMessages,
   getDeputyName,
   getDepMessages,
