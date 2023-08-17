@@ -9,22 +9,22 @@ const {
 } = require("../../middlewares");
 
 const {
-  getDepMessagesByJoin,
-  postDepMessagesByJoin,
+  postDepMessages,
   getDeputyName,
+  getDepMessages,
 } = require("../../controllers/depCabinet");
 
 usersRouter.get(
   "/messages/get-messages",
   authMiddleware,
-  ctrlWrapper(getDepMessagesByJoin)
+  ctrlWrapper(getDepMessages)
 );
 
 usersRouter.post(
   "/messages/add-message",
   messagesValidation,
   depMiddleware,
-  ctrlWrapper(postDepMessagesByJoin)
+  ctrlWrapper(postDepMessages)
 );
 
 usersRouter.get(

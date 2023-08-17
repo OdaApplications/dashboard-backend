@@ -1,22 +1,32 @@
 const { pool } = require("../../models/connection");
 
 const getDepMessages = async (req, res, next) => {
-  const { id } = req.user;
+  const { id, structureName } = req.user;
+  const { page = 0, limit = 10 } = req.query;
+  const skip = page * limit;
 
-  const messageQuery = `SELECT id,
-        senderName,
-        senderEmail,
-        title,
-        text,
-        isReaded,
-        isAnswered,
-        isArchived,
-        answeredAt,
-        createdAt
-        FROM dep_messages WHERE userId = ?`;
+  const messageQuery = `SELECT
+  (SELECT COUNT(*) FROM dep_messages AS sub_m WHERE sub_m.deputyId = ? OR sub_m.councilId = ?) AS totalCount,  
+  m.id,
+  m.senderName,
+  m.senderEmail,
+  m.recieverName,
+  m.title,
+  m.text,
+  m.isReaded,        
+  m.isAnswered,
+  m.isArchived,
+  m.answeredAt,
+  m.createdAt
+    FROM dep_messages AS m
+    WHERE m.deputyId = ?
+    OR
+    m.councilId = ?
+    ORDER BY m.createdAt DESC
+    LIMIT ${limit} OFFSET ${skip};`;
 
   try {
-    pool.query(messageQuery, [id], function (err, result, fields) {
+    pool.query(messageQuery, [id, id, id, id], function (err, result, fields) {
       if (err) {
         return res.status(404).json({
           message: "not found",
@@ -31,10 +41,10 @@ const getDepMessages = async (req, res, next) => {
         });
       }
 
-      res.json({
+      res.status(200).json({
         message: "success",
         data: {
-          length: result.length,
+          totalCount: result[0].totalCount,
           userMessages: result,
         },
         code: 200,

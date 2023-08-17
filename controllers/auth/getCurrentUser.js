@@ -4,7 +4,6 @@ const getCurrentUser = async (req, res, next) => {
   const { id } = req.user;
 
   const userQuery = `SELECT id,
-        login,
         email,
         structureName,
         surname,
@@ -32,7 +31,7 @@ const getCurrentUser = async (req, res, next) => {
         });
       }
 
-      res.json({
+      res.status(200).json({
         message: "success",
         data: {
           user: result[0],

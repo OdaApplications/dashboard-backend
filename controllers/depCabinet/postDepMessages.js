@@ -5,7 +5,7 @@ const { mailer } = require("../../mailer/mailer");
 const { createMessagePdf } = require("../../services/createMessagePdf");
 const { getRecieverNameTemplete } = require("../../helpers");
 
-const postDepMessagesByJoin = async (req, res, next) => {
+const postDepMessages = async (req, res, next) => {
   const {
     senderName = null,
     senderEmail = null,
@@ -20,15 +20,17 @@ const postDepMessagesByJoin = async (req, res, next) => {
     isAnswerByEmail = null,
   } = req.body;
 
-  const { emailList } = req.dep;
+  const { deputyId, councilId, emailList } = req.dep;
 
   const newMessageQuery =
-    "INSERT INTO dep_messages (senderName, senderEmail, senderAddress, senderPhone, recieverLevel, recieverDistrict, recieverHromada, recieverName, title, text, isAnswerByEmail) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+    "INSERT INTO dep_messages (deputyId, councilId, senderName, senderEmail, senderAddress, senderPhone, recieverLevel, recieverDistrict, recieverHromada, recieverName, title, text, isAnswerByEmail) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
   try {
     pool.query(
       newMessageQuery,
       [
+        deputyId,
+        councilId,
         senderName,
         senderEmail,
         senderAddress,
@@ -44,7 +46,7 @@ const postDepMessagesByJoin = async (req, res, next) => {
       async (err, result) => {
         if (err) {
           return res.status(404).json({
-            message: "post messages error",
+            message: "add message error",
             code: 404,
           });
         }
@@ -88,7 +90,7 @@ const postDepMessagesByJoin = async (req, res, next) => {
           });
         } catch (error) {
           return res.status(500).json({
-            message: "post messages error",
+            message: "add message error",
             code: 500,
           });
         }
@@ -96,10 +98,10 @@ const postDepMessagesByJoin = async (req, res, next) => {
     );
   } catch (error) {
     return res.status(500).json({
-      message: "post messages error",
+      message: "add message error",
       code: 500,
     });
   }
 };
 
-module.exports = { postDepMessagesByJoin };
+module.exports = { postDepMessages };

@@ -60,24 +60,26 @@ const messagesHromadaQuery = (limit, skip, hromada) => {
 };
 
 const messagesOdaDeputyQuery = (limit, skip, deputy) => {
-  return `SELECT
-  (SELECT COUNT(recieverName) FROM dep_messages WHERE recieverName = '${deputy}') AS totalCount,  
+  return `SELECT  
   m.id,
   m.senderName,
   m.senderEmail,
   m.recieverName,
+  m.recieverLevel,
+  m.recieverDistrict,
+  m.recieverHromada, 
   m.title,
   m.text,
   m.isReaded,        
   m.isAnswered,
   m.isArchived,
   m.answeredAt,
-  m.createdAt
-    FROM dep_messages AS m
-    INNER JOIN dep_users AS u ON m.recieverLevel = u.access AND m.recieverName = u.structureName
-    WHERE m.recieverLevel = 'oda' AND u.position = 'deputy' AND m.recieverName = '${deputy}'
-    ORDER BY m.createdAt DESC
-    LIMIT ${limit} OFFSET ${skip};`;
+  m.createdAt,
+  (SELECT COUNT(*) FROM dep_messages AS sub_m WHERE sub_m.deputyId = ${id} OR sub_m.councilId = ${id}) AS totalCount
+FROM dep_messages AS m
+WHERE m.deputyId = ${id} OR m.councilId = ${id}
+ORDER BY m.createdAt DESC
+LIMIT ${limit} OFFSET ${skip};`;
 };
 
 const messagesDistictDeputyQuery = (limit, skip, district, deputy) => {
