@@ -10,7 +10,7 @@ const {
 
 const {
   getDepMessagesByJoin,
-  postDepMessagesByJoin,
+  postDepMessages,
   getDeputyName,
   getDepMessages,
 } = require("../../controllers/depCabinet");
@@ -25,7 +25,7 @@ usersRouter.post(
   "/messages/add-message",
   messagesValidation,
   depMiddleware,
-  ctrlWrapper(postDepMessagesByJoin)
+  ctrlWrapper(postDepMessages)
 );
 
 usersRouter.get(

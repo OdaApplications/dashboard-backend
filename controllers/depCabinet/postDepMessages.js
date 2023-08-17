@@ -5,7 +5,7 @@ const { mailer } = require("../../mailer/mailer");
 const { createMessagePdf } = require("../../services/createMessagePdf");
 const { getRecieverNameTemplete } = require("../../helpers");
 
-const postDepMessagesByJoin = async (req, res, next) => {
+const postDepMessages = async (req, res, next) => {
   const {
     senderName = null,
     senderEmail = null,
@@ -104,4 +104,4 @@ const postDepMessagesByJoin = async (req, res, next) => {
   }
 };
 
-module.exports = { postDepMessagesByJoin };
+module.exports = { postDepMessages };
