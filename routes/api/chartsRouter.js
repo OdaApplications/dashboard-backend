@@ -1,7 +1,7 @@
 const express = require("express");
 const chartsRouter = express.Router();
 
-const { ctrlWrapper } = require("../../middlewares");
+const { ctrlWrapper, testGetQueryChartMD } = require("../../middlewares");
 
 const {
   getAllTables,
@@ -40,6 +40,10 @@ chartsRouter.get("/paramsMatrix/:table", ctrlWrapper(getDataByParamsMatrix));
 
 // page chart config routes
 chartsRouter.get("/get-page-config/:pageName", ctrlWrapper(getPageConfig));
-chartsRouter.get("/get-dynamic-data", ctrlWrapper(getDataByDynamicQuery));
+chartsRouter.get(
+  "/get-dynamic-data/:id",
+  ctrlWrapper(testGetQueryChartMD),
+  ctrlWrapper(getDataByDynamicQuery)
+);
 
 module.exports = chartsRouter;
