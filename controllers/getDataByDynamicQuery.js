@@ -47,20 +47,23 @@ function queryFilterFormater(query, filter) {
     const filterArr = Object.entries(filter);
 
     const querySplit = query.split(" ");
-    console.log("querySplit", querySplit);
 
     const filteredQuery = querySplit.map((item, index) => {
       let transformedFilter = "";
       if (item === "filterVar") {
-        let firstOperator = "";
-        if (
-          querySplit[index - 4].toLowerCase() === "where" ||
-          querySplit[index - 4].toLowerCase() === "and"
-        ) {
-          firstOperator = `AND `;
-        } else {
-          firstOperator = `WHERE `;
+        let firstOperator = "WHERE ";
+
+        for (let i = index; i >= 0; i--) {
+          if (
+            querySplit[i].toLowerCase() === "where" ||
+            querySplit[i].toLowerCase() === "and" ||
+            querySplit[i].toLowerCase() === "or"
+          ) {
+            firstOperator = `AND `;
+            break;
+          }
         }
+
         filterArr.forEach((item, index) => {
           if (index === 0) {
             transformedFilter += `${firstOperator}${item[0]} = '${item[1]}'`;
@@ -79,5 +82,6 @@ function queryFilterFormater(query, filter) {
     const querySplit = query.split("filterVar");
     query = querySplit.join("");
   }
+  console.log("query", query);
   return query;
 }

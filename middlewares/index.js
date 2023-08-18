@@ -3,7 +3,7 @@ const { signupValidation, loginValidation } = require("./authValidation");
 const { ctrlWrapper } = require("./ctrlWrapper");
 const { depMiddleware } = require("./depMiddleware");
 const { messagesValidation } = require("./messagesValidation");
-const { testGetQueryChartMD } = require("./testGetQueryChartMD");
+const { testGetQueryChartMD } = require("./getQueryChartMD");
 
 module.exports = {
   authMiddleware,
