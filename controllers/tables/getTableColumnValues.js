@@ -4,7 +4,6 @@ const getTableColumnValues = async (req, res, next) => {
   const { table, column } = req.params;
 
   const dynamicQuery = `SELECT ${column} FROM ${table}`;
-  // SELECT column_name FROM table_name
 
   try {
     pool.query(dynamicQuery, function (err, result, fields) {

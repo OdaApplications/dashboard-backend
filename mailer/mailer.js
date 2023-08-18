@@ -1,13 +1,15 @@
 const nodemailer = require("nodemailer");
 
+const { MAILER_HOST, MAILER_PORT, MAILER_USERNAME, MAILER_PASS } = process.env;
+
 const mailer = nodemailer.createTransport({
-  host: process.env.MAILER_HOST,
-  port: process.env.MAILER_PORT,
-  username: process.env.MAILER_USERNAME,
-  from: process.env.MAILER_USERNAME,
+  host: MAILER_HOST,
+  port: MAILER_PORT,
+  username: MAILER_USERNAME,
+  from: MAILER_USERNAME,
   auth: {
-    user: process.env.MAILER_USERNAME,
-    pass: process.env.MAILER_PASS,
+    user: MAILER_USERNAME,
+    pass: MAILER_PASS,
   },
 });
 

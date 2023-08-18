@@ -15,7 +15,6 @@ const getDataByParams = async (req, res, next) => {
 
   const dynamicQuery = `SELECT * FROM ${table} WHERE ${templateString}`;
   console.log(dynamicQuery);
-  //  SELECT * FROM zaktable WHERE okay = 'придатна' AND bezpereshkodnyi = 'так'
 
   try {
     pool.query(dynamicQuery, function (err, result, fields) {

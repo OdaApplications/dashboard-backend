@@ -4,35 +4,24 @@ const tableRouter = express.Router();
 const { ctrlWrapper } = require("../../middlewares");
 
 const {
-  getTranformedData,
-  getTranformedDataBar,
-  getTranformedDataDonut,
-  getDataForBar,
-  getSumDataForBar,
-  getDataForBarSQL,
-  getDataForChartKnex,
+  getAllTables,
+  createTable,
+  getTableColumns,
+  getTableColumnValues,
+  getTableByName,
 } = require("../../controllers/tables");
 
-tableRouter.get("/getDataForBar/:table", ctrlWrapper(getDataForBar));
+tableRouter.get("/tables/all", ctrlWrapper(getAllTables));
 
-tableRouter.get("/getDataForBarSQL/:table", ctrlWrapper(getDataForBarSQL));
+tableRouter.get("/tables/by-name/:table", ctrlWrapper(getTableByName));
 
-tableRouter.get("/getSumDataForBar/:table/bar", ctrlWrapper(getSumDataForBar));
+tableRouter.get("/tables/columns/all/:table", ctrlWrapper(getTableColumns));
 
 tableRouter.get(
-  "/getDataForChartKnex/:table",
-  ctrlWrapper(getDataForChartKnex)
+  "/tables/columns/values/:table/:column",
+  ctrlWrapper(getTableColumnValues)
 );
 
-// test routes
-tableRouter.get("/getTranformedData/:table", ctrlWrapper(getTranformedData));
-tableRouter.get(
-  "/getTranformedDataBar/:table/bar",
-  ctrlWrapper(getTranformedDataBar)
-);
-tableRouter.get(
-  "/getTranformedDataDonut/:table/donut",
-  ctrlWrapper(getTranformedDataDonut)
-);
+tableRouter.post("/tables/create", ctrlWrapper(createTable));
 
 module.exports = tableRouter;
