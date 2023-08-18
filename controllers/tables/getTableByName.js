@@ -1,9 +1,12 @@
 const { pool } = require("../../models/connection");
-const { querys } = require("../../models/querys");
 
-const getAllTables = async (req, res, next) => {
+const getTableByName = async (req, res, next) => {
+  const { table } = req.params;
+
+  const dynamicQuery = `SELECT * FROM ${table}`;
+
   try {
-    pool.query(querys.allTables, function (err, result, fields) {
+    pool.query(dynamicQuery, function (err, result, fields) {
       if (err) {
         return res.status(404).json({
           message: "not found",
@@ -13,7 +16,7 @@ const getAllTables = async (req, res, next) => {
       }
 
       res.status(200).json({
-        message: "all tables",
+        message: "table by name",
         code: 200,
         length: result.length,
         data: result,
@@ -24,4 +27,4 @@ const getAllTables = async (req, res, next) => {
   }
 };
 
-module.exports = { getAllTables };
+module.exports = { getTableByName };
