@@ -1,3 +1,4 @@
+// const { resultFormater } = require("../helpers");
 const { pool } = require("../models/connection");
 
 const getDataByDynamicQuery = async (req, res, next) => {
@@ -21,6 +22,8 @@ const getDataByDynamicQuery = async (req, res, next) => {
           code: 404,
         });
       }
+
+      // result = resultFormater(result);
 
       res.json({
         message: "success",
