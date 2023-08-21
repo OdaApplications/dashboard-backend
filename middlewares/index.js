@@ -2,8 +2,9 @@ const { authMiddleware } = require("./authMiddleware");
 const { signupValidation, loginValidation } = require("./authValidation");
 const { ctrlWrapper } = require("./ctrlWrapper");
 const { depMiddleware } = require("./depMiddleware");
+const { getQueryChartMD } = require("./getQueryChartMD");
 const { messagesValidation } = require("./messagesValidation");
-const { testGetQueryChartMD } = require("./getQueryChartMD");
+const { queryFilterFormater } = require("./queryFilterFormater");
 
 module.exports = {
   authMiddleware,
@@ -12,5 +13,6 @@ module.exports = {
   loginValidation,
   messagesValidation,
   depMiddleware,
-  testGetQueryChartMD,
+  getQueryChartMD,
+  queryFilterFormater,
 };

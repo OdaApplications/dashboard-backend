@@ -3,7 +3,7 @@ const { pool } = require("../models/connection");
 const getQueryChartMD = async (req, res, next) => {
   const id = req.params.id;
 
-  const query = `SELECT query FROM ch_charts WHERE id = ?;`;
+  const query = `SELECT query, title FROM ch_charts WHERE id = ?;`;
 
   try {
     pool.query(query, [id], function (err, result, fields) {

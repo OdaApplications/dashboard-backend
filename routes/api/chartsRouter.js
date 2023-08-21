@@ -1,13 +1,12 @@
 const express = require("express");
 const chartsRouter = express.Router();
 
-const { ctrlWrapper } = require("../../middlewares");
+const { ctrlWrapper, getQueryChartMD } = require("../../middlewares");
 
 const {
   getPageConfig,
   getChartDataByDynamicQuery,
 } = require("../../controllers/charts");
-const { getQueryChartMD } = require("../../middlewares/getQueryChartMD");
 
 chartsRouter.get("/get-page-config/:pageName", ctrlWrapper(getPageConfig));
 
