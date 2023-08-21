@@ -1,8 +1,8 @@
 function resultFormater(result) {
   if (result.length === 1) {
     return {
-      labels: [Object.keys(result[0])],
-      data: [Object.values(result[0])],
+      labels: Object.keys(result[0]),
+      data: Object.values(result[0]),
     };
   }
 
