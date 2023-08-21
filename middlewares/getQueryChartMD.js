@@ -3,25 +3,24 @@ const { pool } = require("../models/connection");
 const getQueryChartMD = async (req, res, next) => {
   const id = req.params.id;
 
-  const query1 = `SELECT query FROM ch_charts WHERE id = ${id};`;
+  const query = `SELECT query FROM ch_charts WHERE id = ?;`;
 
   try {
-    pool.query(query1, function (err, result, fields) {
+    pool.query(query, [id], function (err, result, fields) {
       if (err) {
-        return res.status(404).json({
-          message: err.message,
-          code: 404,
-        });
-      }
-
-      if (!result.length) {
         return res.status(404).json({
           message: "not found",
           code: 404,
         });
       }
 
-      console.log("result[0]", result[0]);
+      if (!result.length || result[0].query === null) {
+        return res.status(404).json({
+          message: "not found or no query",
+          code: 404,
+        });
+      }
+
       req.chartQuery = result[0];
       next();
     });
