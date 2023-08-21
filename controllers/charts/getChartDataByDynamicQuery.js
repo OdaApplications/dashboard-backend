@@ -1,7 +1,7 @@
 // const { resultFormater } = require("../helpers");
-const { pool } = require("../models/connection");
+const { pool } = require("../../models/connection");
 
-const getDataByDynamicQuery = async (req, res, next) => {
+const getChartDataByDynamicQuery = async (req, res, next) => {
   const { query } = req.chartQuery;
   const { filter } = req.query;
 
@@ -42,7 +42,7 @@ const getDataByDynamicQuery = async (req, res, next) => {
   }
 };
 
-module.exports = { getDataByDynamicQuery };
+module.exports = { getChartDataByDynamicQuery };
 
 function queryFilterFormater(query, filter) {
   if (filter) {

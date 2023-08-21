@@ -1,4 +1,4 @@
-const { pool } = require("../models/connection");
+const { pool } = require("../../models/connection");
 
 const getPageConfig = async (req, res, next) => {
   const { pageName } = req.params;

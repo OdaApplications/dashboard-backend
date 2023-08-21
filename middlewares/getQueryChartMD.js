@@ -1,6 +1,6 @@
 const { pool } = require("../models/connection");
 
-const testGetQueryChartMD = async (req, res, next) => {
+const getQueryChartMD = async (req, res, next) => {
   const id = req.params.id;
 
   const query1 = `SELECT query
@@ -33,4 +33,4 @@ FROM ch_charts WHERE id = ${id};`;
   }
 };
 
-module.exports = { testGetQueryChartMD };
+module.exports = { getQueryChartMD };
