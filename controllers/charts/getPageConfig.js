@@ -14,7 +14,9 @@ const getPageConfig = async (req, res, next) => {
       'size', c.size,
       'location', c.location,
       'title', c.title,
-      'chartConfig', c.chartConfig
+      'chartConfig', c.chartConfig,
+      'type', c.type,
+      'public', c.public
     )
   ) AS charts
 FROM ch_charts_groups AS g
