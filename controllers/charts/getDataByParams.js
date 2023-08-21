@@ -8,13 +8,10 @@ const getDataByParams = async (req, res, next) => {
   }
 
   const { table } = req.params;
-  console.log(table);
 
   const templateString = generateTemplateString(req.query);
-  console.log(templateString);
 
   const dynamicQuery = `SELECT * FROM ${table} WHERE ${templateString}`;
-  console.log(dynamicQuery);
 
   try {
     pool.query(dynamicQuery, function (err, result, fields) {

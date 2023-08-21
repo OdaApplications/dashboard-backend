@@ -85,6 +85,5 @@ function queryFilterFormater(query, filter) {
     const querySplit = query.split("filterVar");
     query = querySplit.join("");
   }
-  console.log("query", query);
   return query;
 }

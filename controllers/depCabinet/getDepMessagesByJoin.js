@@ -47,17 +47,14 @@ const getDepMessagesByJoin = async (req, res, next) => {
       }
 
       if (result[0].access === "district" && result[0].position === "council") {
-        console.log("district & concil");
         queryByLevel = messagesDistrictQuery(limit, skip, result[0].district);
       }
 
       if (result[0].access === "hromada" && result[0].position === "council") {
-        console.log("hromada & concil");
         queryByLevel = messagesHromadaQuery(limit, skip, result[0].hromada);
       }
 
       if (result[0].access === "oda" && result[0].position === "deputy") {
-        console.log("oda & deputy");
         queryByLevel = messagesOdaDeputyQuery(
           limit,
           skip,
@@ -66,7 +63,6 @@ const getDepMessagesByJoin = async (req, res, next) => {
       }
 
       if (result[0].access === "district" && result[0].position === "deputy") {
-        console.log("district & deputy");
         queryByLevel = messagesDistictDeputyQuery(
           limit,
           skip,
