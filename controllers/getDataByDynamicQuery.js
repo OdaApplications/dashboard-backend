@@ -1,39 +1,20 @@
+// const { resultFormater } = require("../helpers");
 const { pool } = require("../models/connection");
 
 const getDataByDynamicQuery = async (req, res, next) => {
-  const { column = null, district = null, hromada = null } = req.body;
+  const { query } = req.chartQuery;
+  const { filter } = req.query;
 
-  console.log(column, district, hromada);
-
-  const query1 = `SELECT type, COUNT(type)
-FROM cas
-GROUP BY type;`;
-
-  //   const query = `SELECT
-  //     IF('${column}' IS NULL, type, NULL) AS type,
-  //     IF('${district}' IS NULL, district, NULL) AS district,
-  //     IF('${hromada}' IS NULL, hromada, NULL) AS hromada,
-  //     COUNT(type)
-  // FROM cas
-  // GROUP BY
-  //     IF('${column}' IS NULL, type, NULL),
-  //     IF('${district}' IS NULL, district, NULL),
-  //     IF('${hromada}' IS NULL, hromada, NULL)
-  // HAVING
-  //     IF('${district}' IS NULL, TRUE, district = '${district}')
-  //     AND
-  //     IF('${hromada}' IS NULL, TRUE, hromada = '${hromada}');`;
+  const formatedQuery = queryFilterFormater(query, filter);
 
   try {
-    pool.query(query1, function (err, result, fields) {
+    pool.query(formatedQuery, function (err, result, fields) {
       if (err) {
         return res.status(404).json({
           message: err.message,
           code: 404,
         });
       }
-
-      console.log("result:", Object.values(result[0]));
 
       if (!result.length) {
         return res.status(404).json({
@@ -42,11 +23,13 @@ GROUP BY type;`;
         });
       }
 
+      // result = resultFormater(result);
+
       res.json({
         message: "success",
         data: {
           length: result.length,
-          result: Object.values(result),
+          result,
         },
         code: 200,
       });
@@ -60,3 +43,48 @@ GROUP BY type;`;
 };
 
 module.exports = { getDataByDynamicQuery };
+
+function queryFilterFormater(query, filter) {
+  if (filter) {
+    filter = JSON.parse(filter);
+    const filterArr = Object.entries(filter);
+
+    const querySplit = query.split(" ");
+
+    const filteredQuery = querySplit.map((item, index) => {
+      let transformedFilter = "";
+      if (item === "filterVar") {
+        let firstOperator = "WHERE ";
+
+        for (let i = index; i >= 0; i--) {
+          if (
+            querySplit[i].toLowerCase() === "where" ||
+            querySplit[i].toLowerCase() === "and" ||
+            querySplit[i].toLowerCase() === "or"
+          ) {
+            firstOperator = `AND `;
+            break;
+          }
+        }
+
+        filterArr.forEach((item, index) => {
+          if (index === 0) {
+            transformedFilter += `${firstOperator}${item[0]} = '${item[1]}'`;
+          } else {
+            transformedFilter += ` AND ${item[0]} = '${item[1]}'`;
+          }
+        });
+        return transformedFilter;
+      } else {
+        return item;
+      }
+    });
+
+    query = filteredQuery.join(" ");
+  } else {
+    const querySplit = query.split("filterVar");
+    query = querySplit.join("");
+  }
+  console.log("query", query);
+  return query;
+}
