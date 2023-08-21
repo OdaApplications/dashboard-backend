@@ -1,8 +1,8 @@
-// const { resultFormater } = require("../helpers");
+const { resultFormater } = require("../../helpers");
 const { pool } = require("../../models/connection");
 
 const getChartDataByDynamicQuery = async (req, res, next) => {
-  const { query } = req.chartQuery;
+  const { query, title } = req.chartQuery;
   const { filter } = req.query;
 
   const formatedQuery = queryFilterFormater(query, filter);
@@ -23,13 +23,14 @@ const getChartDataByDynamicQuery = async (req, res, next) => {
         });
       }
 
-      // result = resultFormater(result);
+      const formattedResult = resultFormater(result);
 
       res.json({
         message: "success",
         data: {
           length: result.length,
-          result,
+          chartName: title,
+          data: formattedResult,
         },
         code: 200,
       });
