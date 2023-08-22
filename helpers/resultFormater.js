@@ -2,7 +2,7 @@ function resultFormater(result, isGroupBy) {
   if (result.length === 1 && !isGroupBy) {
     return {
       labels: Object.keys(result[0]),
-      data: Object.values(result[0]),
+      data: Object.values(result[0]).map((num) => Number(num)),
     };
   }
 
