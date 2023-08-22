@@ -7,12 +7,12 @@ const getFilterValues = async (req, res, next) => {
   const { target, table } = req.params;
   const { filter } = req.query;
 
-  let query = `SELECT ? FROM ? filterVar GROUP BY ?`;
+  let query = `SELECT ${target} FROM ${table} filterVar GROUP BY ${target}`;
 
   query = queryFilterFormater(query, filter);
 
   try {
-    pool.query(query, [target, table, target], function (err, result, fields) {
+    pool.query(query, function (err, result, fields) {
       if (err) {
         return res.status(404).json({
           message: "not found",
@@ -31,7 +31,7 @@ const getFilterValues = async (req, res, next) => {
       });
     });
   } catch (error) {
-    return res.status(500).json({ message: error.message });
+    return res.status(500).json({ message: "data error", code: 500 });
   }
 };
 
