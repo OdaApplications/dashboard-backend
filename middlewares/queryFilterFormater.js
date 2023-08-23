@@ -19,6 +19,10 @@ function queryFilterFormater(query, filter) {
             firstOperator = `AND `;
             break;
           }
+          if (querySplit[i].toLowerCase() === "from") {
+            firstOperator = `WHERE `;
+            break;
+          }
         }
 
         filterArr.forEach((item, index) => {
