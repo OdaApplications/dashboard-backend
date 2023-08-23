@@ -24,9 +24,9 @@ const getChartDataByDynamicQuery = async (req, res, next) => {
         });
       }
 
-      const isGroupBy = formatedQuery.toLowerCase().includes("group by");
+      const isCustomLabels = formatedQuery.includes("customLabels");
 
-      const formattedResult = resultFormater(result, isGroupBy);
+      const formattedResult = resultFormater(result, isCustomLabels);
 
       res.status(200).json({
         message: "success",

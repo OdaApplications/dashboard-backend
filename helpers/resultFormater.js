@@ -1,5 +1,5 @@
-function resultFormater(result, isGroupBy) {
-  if (result.length === 1 && !isGroupBy) {
+function resultFormater(result, isCustomLabels) {
+  if (isCustomLabels) {
     return {
       labels: Object.keys(result[0]),
       data: Object.values(result[0]).map((num) => Number(num)),
