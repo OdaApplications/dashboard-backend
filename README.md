@@ -19,6 +19,7 @@ Dashboard backend - Node.js, SQL
 - env template
 
 - validation
+- user roles
 
 # todo
 
@@ -30,8 +31,6 @@ Dashboard backend - Node.js, SQL
 
 - post charts routes
 - post charts controllers
-
-- user roles
 
 - avatars
 
