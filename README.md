@@ -18,6 +18,8 @@ Dashboard backend - Node.js, SQL
 - eslint check
 - env template
 
+- validation
+
 # todo
 
 - temp dir for temp files
@@ -30,7 +32,6 @@ Dashboard backend - Node.js, SQL
 - post charts controllers
 
 - user roles
-- validation
 
 - avatars
 
