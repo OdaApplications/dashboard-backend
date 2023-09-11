@@ -39,7 +39,7 @@ const signup = async (req, res, next) => {
       const hashPassword = bcrypt.hashSync(password, bcrypt.genSaltSync(10));
 
       const newUserQuery =
-        "INSERT INTO dep_users (login, email, password, structureName, surname, firstName, lastName, phone, position, access, district, hromada) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ? ?, ?, ?)";
+        "INSERT INTO dep_users (login, email, password, structureName, surname, firstName, lastName, phone, position, access, district, hromada) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
       pool.query(
         newUserQuery,
