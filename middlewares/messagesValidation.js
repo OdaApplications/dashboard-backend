@@ -85,7 +85,7 @@ const messagesValidation = (req, res, next) => {
     ),
     recieverName: Joi.string().min(3).max(100).required(),
     recieverEmail: Joi.string().min(3).max(100),
-    title: Joi.string(),
+    title: Joi.string().max(100),
     text: Joi.string().min(3).max(2000).required(),
     isAnswerByEmail: Joi.boolean(),
   });

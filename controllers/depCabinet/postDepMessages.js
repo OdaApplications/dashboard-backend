@@ -62,7 +62,7 @@ const postDepMessages = async (req, res, next) => {
           );
 
           await mailer.sendMail({
-            from: process.env.MAILER_USERNAME,
+            from: process.env.SEND_MAIL_FROM,
             to: emailList,
             subject: title,
             text: `${getRecieverNameTemplete(
