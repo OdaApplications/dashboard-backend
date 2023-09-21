@@ -28,3 +28,12 @@ jobs:
       - name: Install dependendencies
         run: 
           npm install
+ 
+      - name: pm2 stop 0
+        run: pm2 stop 0
+ 
+      - name: pm2 start 0
+        run: pm2 start 0
+ 
+      - name: pm2 save
+        run: pm2 save
