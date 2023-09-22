@@ -14,7 +14,7 @@ const getDepMessages = async (req, res, next) => {
   m.title,
   m.text,
   m.isReaded,        
-  m.isAnswered,
+  m.textAnswer,
   m.isArchived,
   m.answeredAt,
   m.createdAt

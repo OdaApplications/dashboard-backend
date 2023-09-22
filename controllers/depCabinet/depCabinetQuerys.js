@@ -8,7 +8,7 @@ const messagesOdaQuery = (limit, skip) => {
   m.title,
   m.text,
   m.isReaded,        
-  m.isAnswered,
+  m.textAnswer,
   m.isArchived,
   m.answeredAt,
   m.createdAt
@@ -29,7 +29,7 @@ const messagesDistrictQuery = (limit, skip, district) => {
   m.title,
   m.text,
   m.isReaded,        
-  m.isAnswered,
+  m.textAnswer,
   m.isArchived,
   m.answeredAt,
   m.createdAt
@@ -49,7 +49,7 @@ const messagesHromadaQuery = (limit, skip, hromada) => {
   m.title,
   m.text,
   m.isReaded,        
-  m.isAnswered,
+  m.textAnswer,
   m.isArchived,
   m.answeredAt,
   m.createdAt
@@ -71,7 +71,7 @@ const messagesOdaDeputyQuery = (limit, skip, deputy) => {
   m.title,
   m.text,
   m.isReaded,        
-  m.isAnswered,
+  m.textAnswer,
   m.isArchived,
   m.answeredAt,
   m.createdAt,
@@ -92,7 +92,7 @@ const messagesDistictDeputyQuery = (limit, skip, district, deputy) => {
   m.title,
   m.text,
   m.isReaded,        
-  m.isAnswered,
+  m.textAnswer,
   m.isArchived,
   m.answeredAt,
   m.createdAt
@@ -118,7 +118,7 @@ const messagesHromadaDeputyQuery = (limit, skip, hromada, deputy) => {
   m.title,
   m.text,
   m.isReaded,        
-  m.isAnswered,
+  m.textAnswer,
   m.isArchived,
   m.answeredAt,
   m.createdAt

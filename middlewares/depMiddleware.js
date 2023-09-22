@@ -9,6 +9,8 @@ const depMiddleware = async (req, res, next) => {
     recieverHromada = null,
   } = req.body;
 
+  console.log(111, req.body);
+
   const depDataQuery = `SELECT
   u.id,
   u.email
