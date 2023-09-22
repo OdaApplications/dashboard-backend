@@ -7,6 +7,7 @@ const {
   messagesValidation,
   answerMessagesValidation,
   getDepMessageMiddleware,
+  depMiddleware,
 } = require("../../middlewares");
 
 const {
@@ -33,7 +34,7 @@ usersRouter.get(
 usersRouter.post(
   "/messages/add-message",
   messagesValidation,
-  getDepMessageMiddleware,
+  depMiddleware,
   ctrlWrapper(postDepMessages)
 );
 

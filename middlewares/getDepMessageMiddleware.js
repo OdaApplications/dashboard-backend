@@ -13,6 +13,7 @@ const getDepMessageMiddleware = async (req, res, next) => {
   m.recieverHromada,
   m.recieverName,
   m.isAnswerByEmail,
+  m.textAnswer,
   m.createdAt
   FROM dep_messages AS m
   WHERE m.id = ?;`;
@@ -33,21 +34,21 @@ const getDepMessageMiddleware = async (req, res, next) => {
         });
       }
 
-      console.log("resultttttt:", result[0]);
+      if (result[0].textAnswer) {
+        return res.status(400).json({
+          message: "answer is already exist",
+          code: 404,
+        });
+      }
 
       req.message = {
-        deputyId: result[0].deputyId,
         senderName: result[0].senderName,
         senderEmail: result[0].senderEmail,
         recieverLevel: result[0].recieverLevel,
         recieverDistrict: result[0].recieverDistrict,
         recieverHromada: result[0].recieverHromada,
         recieverName: result[0].recieverName,
-        isAnswerByEmail: result[0].isAnswerByEmail,
-        createdAt: result[0].createdAt,
       };
-
-      next();
     });
   } catch (error) {
     return res.status(500).json({
