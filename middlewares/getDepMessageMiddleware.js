@@ -33,7 +33,7 @@ const getDepMessageMiddleware = async (req, res, next) => {
         });
       }
 
-      console.log("result:", result[0]);
+      console.log("resultttttt:", result[0]);
 
       req.message = {
         deputyId: result[0].deputyId,
@@ -46,6 +46,7 @@ const getDepMessageMiddleware = async (req, res, next) => {
         isAnswerByEmail: result[0].isAnswerByEmail,
         createdAt: result[0].createdAt,
       };
+
       next();
     });
   } catch (error) {
