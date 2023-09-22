@@ -49,6 +49,8 @@ const getDepMessageMiddleware = async (req, res, next) => {
         recieverHromada: result[0].recieverHromada,
         recieverName: result[0].recieverName,
       };
+
+      next();
     });
   } catch (error) {
     return res.status(500).json({
