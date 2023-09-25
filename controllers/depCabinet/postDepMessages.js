@@ -65,11 +65,18 @@ const postDepMessages = async (req, res, next) => {
             from: process.env.SEND_MAIL_FROM,
             to: emailList,
             subject: title,
-            text: `${getRecieverNameTemplete(
+            text: `Відправник: ${senderName} 
+            E-mail відправника: ${senderEmail} 
+            
+            Отримувач:
+            ${getRecieverNameTemplete(
               recieverLevel,
               recieverDistrict,
               recieverHromada
-            )} \nВідправник: ${senderName} \nE-mail відправника: ${senderEmail} \nОтримувач: ${recieverName} \nТекст зверненя: ${text}`,
+            )}
+            депутат: ${recieverName}
+
+            Текст зверненя: ${text}`,
             attachments: [
               {
                 filename: "eMessage.pdf",
