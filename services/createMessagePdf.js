@@ -18,7 +18,7 @@ const createMessagePdf = async (messageData) => {
     recieverEmail = null,
     title = null,
     text,
-    isAnswerByEmail,
+    isAnswerByEmail = null,
   } = messageData;
 
   const doc = new jsPDF({ fontSize: 12, lineHeight: 1 });
@@ -104,8 +104,11 @@ const createMessagePdf = async (messageData) => {
     doc.text("Бажаю отримати відповідь на email.", 20, 265);
   }
 
+  const date = new Date();
+  const currentDate = date.toLocaleDateString();
+
   doc.setFont("times-bold", "bold");
-  doc.text(new Date().toLocaleDateString(), 20, 275);
+  doc.text(currentDate, 20, 275);
   doc.text(senderName, 110, 275);
 
   // Збереження PDF файлу
