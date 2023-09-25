@@ -51,21 +51,21 @@ const postDepMessages = async (req, res, next) => {
           });
         }
 
-        try {
-          const pathToPdfFile = await createMessagePdf(req.body);
-          const data = fs.readFileSync(pathToPdfFile);
+        const pathToPdfFile = await createMessagePdf(req.body);
+        const data = fs.readFileSync(pathToPdfFile);
 
-          res.contentType("application/pdf");
-          res.setHeader(
-            "Content-Disposition",
-            "attachment; filename=e-message.pdf"
-          );
+        res.contentType("application/pdf");
+        res.setHeader(
+          "Content-Disposition",
+          "attachment; filename=e-message.pdf"
+        );
 
-          await mailer.sendMail({
-            from: process.env.SEND_MAIL_FROM,
-            to: emailList,
-            subject: title,
-            text: `Відправник: ${senderName} 
+        await mailer.sendMail({
+          from: process.env.SEND_MAIL_FROM,
+          to: senderEmail,
+          bcc: emailList,
+          subject: title,
+          text: `Відправник: ${senderName} 
             E-mail відправника: ${senderEmail} 
             
             Отримувач:
@@ -77,30 +77,24 @@ const postDepMessages = async (req, res, next) => {
             депутат: ${recieverName}
 
             Текст зверненя: ${text}`,
-            attachments: [
-              {
-                filename: "eMessage.pdf",
-                path: pathToPdfFile,
-              },
-            ],
-          });
+          attachments: [
+            {
+              filename: "eMessage.pdf",
+              path: pathToPdfFile,
+            },
+          ],
+        });
 
-          await res.status(201).send(data);
+        await res.status(201).send(data);
 
-          fs.unlinkSync(pathToPdfFile, (err) => {
-            if (err) {
-              return res.status(404).json({
-                message: "file error",
-                code: 404,
-              });
-            }
-          });
-        } catch (error) {
-          return res.status(500).json({
-            message: "add message error",
-            code: 500,
-          });
-        }
+        fs.unlinkSync(pathToPdfFile, (err) => {
+          if (err) {
+            return res.status(404).json({
+              message: "file error",
+              code: 404,
+            });
+          }
+        });
       }
     );
   } catch (error) {
