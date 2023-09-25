@@ -65,19 +65,13 @@ const postDepMessages = async (req, res, next) => {
           to: senderEmail,
           bcc: emailList,
           subject: title,
-          text: `Відправник: ${senderName} 
-          \nE-mail відправника: ${senderEmail} 
-            
-          \nОтримувач:
-          \n${getRecieverNameTemplete(
+          text: `Відправник: ${senderName} \nE-mail відправника: ${senderEmail} 
+          \nОтримувач:\n${getRecieverNameTemplete(
             recieverLevel,
             recieverDistrict,
             recieverHromada
-          )}
-          \n${recieverName}
-
-          \nТекст зверненя:
-          \n${text}`,
+          )} \n${recieverName} 
+          \nТекст зверненя: \n${text}`,
           attachments: [
             {
               filename: "eMessage.pdf",
