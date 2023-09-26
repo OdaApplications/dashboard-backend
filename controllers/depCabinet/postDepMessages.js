@@ -60,10 +60,34 @@ const postDepMessages = async (req, res, next) => {
           "attachment; filename=e-message.pdf"
         );
 
+        await res.status(201).send(data);
+
+        await mailer.sendMail({
+          from: process.env.SEND_MAIL_FROM,
+          to: emailList,
+          subject: title,
+          text: `Відправник: ${senderName} \nE-mail відправника: ${senderEmail} 
+          \nОтримувач:\n${getRecieverNameTemplete(
+            recieverLevel,
+            recieverDistrict,
+            recieverHromada
+          )} \n${recieverName} 
+          \nТекст зверненя: \n${text}
+          \n
+          \n
+          Переглянути та відповісти на звернення можна в Кабінеті депутата за посиланням: https://analytics.carpathia.gov.ua/cabinet/profile/messages/all
+          `,
+          attachments: [
+            {
+              filename: "eMessage.pdf",
+              path: pathToPdfFile,
+            },
+          ],
+        });
+
         await mailer.sendMail({
           from: process.env.SEND_MAIL_FROM,
           to: senderEmail,
-          bcc: emailList,
           subject: title,
           text: `Відправник: ${senderName} \nE-mail відправника: ${senderEmail} 
           \nОтримувач:\n${getRecieverNameTemplete(
@@ -79,8 +103,6 @@ const postDepMessages = async (req, res, next) => {
             },
           ],
         });
-
-        await res.status(201).send(data);
 
         fs.unlinkSync(pathToPdfFile, (err) => {
           if (err) {
