@@ -74,7 +74,6 @@ const postDepMessages = async (req, res, next) => {
           )} \n${recieverName} 
           \nТекст зверненя: \n${text}
           \n
-          \n
           Переглянути та відповісти на звернення можна в Кабінеті депутата за посиланням: https://analytics.carpathia.gov.ua/cabinet/profile/messages/all
           `,
           attachments: [
