@@ -22,9 +22,12 @@ const pool = mysql.createConnection({
 
 const connectToSQL = async () => {
   return pool.connect(function (err) {
-    if (err) throw err;
+    if (err) {
+      console.log("Database connection fail!");
+      throw err;
+    }
+
     console.log("Database connection successful");
   });
 };
-
 module.exports = { pool, knex, connectToSQL };
