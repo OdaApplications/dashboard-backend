@@ -7,6 +7,7 @@ const { getDepMessageMiddleware } = require("./getDepMessageMiddleware");
 const { getQueryChartMD } = require("./getQueryChartMD");
 const { messagesValidation } = require("./messagesValidation");
 const { queryFilterFormater } = require("./queryFilterFormater");
+const { userTablesAccessChecker } = require("./tablesMiddlewares");
 
 module.exports = {
   authMiddleware,
@@ -19,4 +20,5 @@ module.exports = {
   queryFilterFormater,
   answerMessagesValidation,
   getDepMessageMiddleware,
+  userTablesAccessChecker,
 };

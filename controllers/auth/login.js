@@ -16,7 +16,8 @@ const login = async (req, res, next) => {
         position,
         access,
         district,
-        hromada
+        hromada,
+        tablesAccess
         FROM dep_users WHERE login = ?`;
 
   try {

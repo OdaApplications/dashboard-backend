@@ -16,9 +16,9 @@ const signupValidation = (req, res, next) => {
     lastName: Joi.string().max(50),
     phone: Joi.string().max(30),
     position: Joi.string()
-      .valid("user", "deputy", "council", "admin")
+      .valid("user", "worker", "deputy", "council", "admin")
       .required(),
-    access: Joi.string().valid("oda", "district", "hromada").required(),
+    access: Joi.string().valid("none", "oda", "district", "hromada"),
     district: Joi.string().valid(
       "Ужгородський",
       "Мукачівський",

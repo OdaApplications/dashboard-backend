@@ -13,7 +13,9 @@ const getCurrentUser = async (req, res, next) => {
         position,
         access,
         district,
-        hromada FROM dep_users WHERE id = ?`;
+        hromada,
+        tablesAccess
+        FROM dep_users WHERE id = ?`;
 
   try {
     pool.query(userQuery, [id], function (err, result, fields) {
