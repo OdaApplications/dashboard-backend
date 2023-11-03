@@ -1,23 +1,18 @@
 # dashboard-backend
 
-Dashboard backend - Node.js, SQL
+Dashboard backend - Node.js, SQL,
 
 # done
 
 - SQL connection
-
 - get charts routes
 - get charts controllers
-
 - user routes
 - user controllers
-
 - authorization middleware
 - signup, login, logout
-
 - eslint check
 - env template
-
 - validation
 - user roles
 
