@@ -15,7 +15,7 @@ const formatsLogger =
 
 //  create a write stream (in append mode)
 const accessLogStream = fs.createWriteStream(
-  path.join(__dirname, "access.log"),
+  path.join(process.cwd(), "access.log"),
   { flags: "a" }
 );
 
