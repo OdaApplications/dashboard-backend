@@ -1,6 +1,8 @@
 const express = require("express");
 const logger = require("morgan");
 const cors = require("cors");
+const fs = require("fs");
+const path = require("path");
 
 const chartsRouter = require("./routes/api/chartsRouter");
 const tableRouter = require("./routes/api/tablesRouter");
@@ -8,9 +10,16 @@ const authRouter = require("./routes/api/authRouter");
 const depCabinetRouter = require("./routes/api/depCabinetRouter");
 
 const app = express();
-const formatsLogger = app.get("env") === "development" ? "dev" : "short";
+const formatsLogger =
+  app.get("env") === "development" ? "combined" : "combined";
 
-app.use(logger(formatsLogger));
+//  create a write stream (in append mode)
+const accessLogStream = fs.createWriteStream(
+  path.join(__dirname, "access.log"),
+  { flags: "a" }
+);
+
+app.use(logger(formatsLogger, { stream: accessLogStream }));
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
